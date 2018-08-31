@@ -15,6 +15,11 @@ objects for speed, and to keep the nested loops to a minimum.
 I also wrote a small script to check my results against the correct results,
 considering the +-0.01 difference mentioned in the readme.
 
+I did not write any unit tests due to the intersection of my inexperience
+with the python unit test methodology and time constraints. Due to life
+circumstances, I lost a day of work time, which was planned for unit tests.
+
+
 ## packages
 ### decimal
 I used the decimal.Decimal object to maintain precision for the stock values.
