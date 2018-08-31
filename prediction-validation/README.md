@@ -2,6 +2,8 @@
 
 I implemented my solution using Python 3.x.
 
+I developed this on Windows 10 and tested in Ubuntu.
+
 My initial idea was to limit the amount of memory required by looping over the
 files, grabbing the data for each hour, parsing it into meaningful objects,
 and continuing until all files were read. This took VERY LONG to get through
