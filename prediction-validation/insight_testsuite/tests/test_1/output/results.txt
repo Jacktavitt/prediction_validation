@@ -1,0 +1,1 @@
+Comparing insight_testsuite\tests\test_1\output\john_comparison.txt and insight_testsuite\tests\test_1\output\comparison.txt
