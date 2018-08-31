@@ -12,6 +12,9 @@ overhead in Python than was necessary.
 Instead, I decided to rely on Python's list comprehension and dictionary
 objects for speed, and to keep the nested loops to a minimum.
 
+I also wrote a small script to check my results against the correct results,
+considering the +-0.01 difference mentioned in the readme.
+
 ## packages
 ### decimal
 I used the decimal.Decimal object to maintain precision for the stock values.

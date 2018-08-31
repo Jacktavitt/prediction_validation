@@ -3,6 +3,7 @@ import HelperMethods as HM
 import decimal
 
 def main(argv):
+    '''compares my results with documented results, checking for +-0.01 difference'''
     with open(argv[1],'r') as uf:
         userResults = uf.read()
     with open(argv[2],'r') as cf:
