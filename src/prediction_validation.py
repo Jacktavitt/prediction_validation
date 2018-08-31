@@ -6,11 +6,19 @@ def main(argv):
     with open(argv[1],'r') as wf:
         window=int(wf.read())
     # stick data into memory since other way took too long and was wrong
-    with open(argv[2],'r') as af:
-        actualData = HM.makeDictionary(af.read())
-    with open(argv[3],'r') as pf:
-        predictedData = HM.makeDictionary(pf.read())
-    # del predictedData[None]
+    try:
+        with open(argv[2],'r') as af:
+            actualData = HM.makeDictionary(af.read())
+    except Exception as e:
+        print(e)
+        sys.exit()
+    try:
+        with open(argv[3],'r') as pf:
+            predictedData = HM.makeDictionary(pf.read())
+    except Exception as e:
+        print(e)
+        sys.exit()
+  
     try:
         predictedKeys=HM.sortedKeys(predictedData)
     except TypeError as e:
@@ -29,29 +37,36 @@ def main(argv):
     head = predictedKeys[0]
     tail = head+window-1
 
-    with open(sys.argv[4],'w') as outFile:
-        while tail <= predictedKeys[-1]:
-            missingT, missingH = False, False
-            try:
-                headIndex = predictedKeys.index(head)
-            except ValueError as e:
-                missingH = True
-            try:
-                tailIndex = predictedKeys.index(tail)
-            except ValueError as e:
-                missingT = True
+    try:
+        outFile = open(sys.argv[4],'w')
+    except Exception as e:
+        print(e)
+        sys.exit()
+    # with open(sys.argv[4],'w') as outFile:
+    while tail <= predictedKeys[-1]:
+        missingT, missingH = False, False
+        try:
+            headIndex = predictedKeys.index(head)
+        except ValueError as e:
+            missingH = True
+        try:
+            tailIndex = predictedKeys.index(tail)
+        except ValueError as e:
+            missingT = True
 
-            errorTotal = sum([resultDict[e][0] for e in predictedKeys[headIndex:tailIndex+1]])
-            numErrors = sum([resultDict[e][1] for e in predictedKeys[headIndex:tailIndex+1]])
-            if missingT and missingH:
-                windowError = 'NA'
-                outFile.write("{}|{}|{}\n".format(head, tail, windowError))
-                missingT, missingH = False, False
-            else:
-                windowError = errorTotal/numErrors
-                outFile.write("{}|{}|{:.2f}\n".format(head, tail, windowError))
-            head+=1
-            tail+=1
+        errorTotal = sum([resultDict[e][0] for e in predictedKeys[headIndex:tailIndex+1]])
+        numErrors = sum([resultDict[e][1] for e in predictedKeys[headIndex:tailIndex+1]])
+        if missingT and missingH:
+            windowError = 'NA'
+            outFile.write("{}|{}|{}\n".format(head, tail, windowError))
+            missingT, missingH = False, False
+        else:
+            windowError = errorTotal/numErrors
+            outFile.write("{}|{}|{:.2f}\n".format(head, tail, windowError))
+        head+=1
+        tail+=1
+
+    outFile.close()
 
 if __name__ == "__main__":
     if len(sys.argv) != 5:
